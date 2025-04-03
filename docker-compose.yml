@@ -1,0 +1,70 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./skin_diagnostic
+    container_name: django_backend
+    command: gunicorn skin_diagnostic.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./skin_diagnostic:/app
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=skin_diagnostic.settings
+    depends_on:
+      - db
+    restart: unless-stopped
+    env_file:
+      - ./skin_diagnostic/.env
+    networks:
+      - app_network
+
+  # 🔥 FRONTEND EN MODE PROD (React + NGINX)
+  frontend-prod:
+    build: ./project0
+    container_name: react_frontend_prod
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - app_network
+
+  # 🧪 FRONTEND EN MODE DEV (npm run dev)
+  #frontend-dev:
+   ##working_dir: /app
+    ## context: ./project0
+      #dockerfile: Dockerfile.dev
+    #volumes:
+     # - ./project0:/app
+      #- /app/node_modules
+    #command: npm run dev
+    #ports:
+     # - "5173:5173"  # ou 3000 si Create React App
+    #depends_on:
+     # - backend
+    #restart: unless-stopped
+    #networks:
+     # - app_network
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: skin_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - app_network
+
+volumes:
+  pgdata:
+  media_volume:
+
+networks:
+  app_network:
