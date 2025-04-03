@@ -1,7 +1,3 @@
-Parfait Saifoulaye 🎯 Voici un **README complet** pour ton projet de diagnostic du cancer de la peau, fullstack avec **Django + React + Docker**, prêt à être déployé sur **Railway** :
-
----
-
 ## 🧪 Skin Diagnostic – Application Web de Détection du Cancer de la Peau
 
 Application complète (frontend React + backend Django + PostgreSQL) permettant aux utilisateurs de soumettre des images de leur peau pour obtenir un **diagnostic automatique** grâce à un modèle d’intelligence artificielle.
