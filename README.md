@@ -107,5 +107,3 @@ Développé par **Saifoulaye Diallo**
 Projet académique/testé avec IA pour la détection de maladies cutanées
 
 ---
-
-Souhaites-tu que je te le génère en fichier `README.md` directement ?
